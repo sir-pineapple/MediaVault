@@ -1,0 +1,21 @@
+{
+  "name": "mediavault-backend",
+  "version": "1.0.0",
+  "description": "A Self-Hosted Media Library and Streaming Application",
+  "repository": {
+    "type": "git",
+    "url": "github.com/sir-pineapple/MediaVault"
+  },
+  "license": "MIT",
+  "author": "sir-pineapple",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.4"
+  }
+}
