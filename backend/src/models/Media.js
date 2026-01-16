@@ -10,6 +10,14 @@ const MediaSchema = new mongoose.Schema(
         year: {
             type: String,
         },
+        season: {
+            type: Number,
+            default: null,
+        },
+        episode: {
+            type: Number,
+            default: null,
+        },
         type: {
             type: String,
             enum: ["movie", "episode"],
