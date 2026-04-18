@@ -1,0 +1,25 @@
+{
+  "name": "mediavault",
+  "version": "1.0.0",
+  "description": "Self-hosted Media Server",
+  "homepage": "https://github.com/sir-pineapple/MediaVault#readme",
+  "bugs": {
+    "url": "https://github.com/sir-pineapple/MediaVault/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sir-pineapple/MediaVault.git"
+  },
+  "license": "ISC",
+  "author": "sir-pineapple",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  }
+}
