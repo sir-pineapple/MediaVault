@@ -77,7 +77,7 @@ async function enrichShows() {
 
         await db.query(
             `UPDATE tv_shows
-            SET title = $1.
+            SET title = $1,
                 imdb_id = $2,
                 poster_url = $3,
                 metadata_fetched = TRUE
