@@ -16,7 +16,7 @@ async function fetchMovieMetadata(title, year) {
 
 const db = require('./db');
 
-async function encrichMovies() {
+async function enrichMovies() {
     const res = await db.query(
         `SELECT * FROM movies WHERE metadata_fetched = FALSE`
     );
