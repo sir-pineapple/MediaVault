@@ -98,7 +98,7 @@ async function enrichShows() {
 async function runMetadataEnrichment() {
     console.log("Fetching metadata...");
 
-    await encrichMovies();
+    await enrichMovies();
     await enrichShows();
 
     console.log("Metadata update complete");
