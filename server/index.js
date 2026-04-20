@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const { runScan } = require('./scanner');
 const { runMetadataEnrichment } = require('./metadata');
+const { getMovies, getShows } = require('./media');
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,19 @@ app.post('/scan', async (req, res) => {
 app.post('/metadata', async(req, res) => {
     await runMetadataEnrichment();
     res.send("Metadata fetched");
+});
+
+app.get('/media', async(req, res) => {
+    try {
+        const movies = await getMovies();
+        const shows = await getShows();
+
+        res.json({ movies, shows });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching media");
+    }
 });
 
 const PORT = process.env.SERVER_PORT;

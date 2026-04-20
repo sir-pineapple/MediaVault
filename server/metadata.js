@@ -34,12 +34,14 @@ async function encrichMovies() {
             SET title = $1,
                 year = $2,
                 imdb_id = $3,
+                poster_url = $4,
                 metadata_fetched = TRUE
-            WHERE id = $4`,
+            WHERE id = $5`,
             [
                 data.Title,
                 data.Year,
                 data.imdbID,
+                data.Poster,
                 movie.id
             ]
         );
@@ -77,11 +79,13 @@ async function enrichShows() {
             `UPDATE tv_shows
             SET title = $1.
                 imdb_id = $2,
+                poster_url = $3,
                 metadata_fetched = TRUE
-            WHERE id = $3`,
+            WHERE id = $4`,
             [
                 data.Title,
                 data.imdbID,
+                data.Poster,
                 show.id
             ]
         );

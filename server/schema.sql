@@ -5,6 +5,7 @@ CREATE TABLE movies (
     title TEXT,
     year INT,
     imdb_id TEXT,
+    poster_url TEXT,
     metadata_fetched BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -14,6 +15,7 @@ CREATE TABLE tv_shows (
     parsed_title TEXT,
     title TEXT,
     imdb_id TEXT,
+    poster_url TEXT,
     metadata_fetched BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
