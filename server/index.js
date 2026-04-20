@@ -1,18 +1,24 @@
 const express = require('express');
 require('dotenv').config();
 
+const { runScan } = require('./scanner');
+const { runMetadataEnrichment } = require('./metadata');
+
 const app = express();
 app.use(express.json());
 
-const { runScan } = require('./scanner');
+app.get('/', (req, res) => {
+    res.send('MediaVault API running');
+});
 
 app.post('/scan', async (req, res) => {
     await runScan();
     res.send("Scan complete");
 });
 
-app.get('/', (req, res) => {
-    res.send('MediaVault API running');
+app.post('/metadata', async(req, res) => {
+    await runMetadataEnrichment();
+    res.send("Metadata fetched");
 });
 
 const PORT = process.env.SERVER_PORT;
