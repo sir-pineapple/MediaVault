@@ -4,6 +4,8 @@ require('dotenv').config();
 const { runScan } = require('./scanner');
 const { runMetadataEnrichment } = require('./metadata');
 const { getMovies, getShows } = require('./media');
+const db = require('./db');
+const streamVideo = require('./stream');
 
 const app = express();
 app.use(express.json());
@@ -32,6 +34,29 @@ app.get('/media', async(req, res) => {
     catch (err) {
         console.error(err);
         res.status(500).send("Error fetching media");
+    }
+});
+
+app.get('/stream/:id', async (req, res) => {
+    try {
+        const fileId = req.params.id;
+
+        const result = await db.query(
+            `SELECT file_path FROM media_files WHERE id = $1`,
+            [fileId]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(400).send("File not found");
+        }
+
+        const filePath = result.rows[0].file_path;
+
+        streamVideo(filePath, req, res);
+    }
+    catch(err) {
+        console.error(err);
+        res.status(500).send("Streaming error");
     }
 });
 
