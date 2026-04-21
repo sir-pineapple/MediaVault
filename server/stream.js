@@ -44,4 +44,4 @@ function streamVideo(filePath, req, res) {
     file.pipe(res);
 }
 
-module.exports = { streamVideo };
+module.exports = streamVideo;
