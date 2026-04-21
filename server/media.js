@@ -17,7 +17,7 @@ async function getMovies() {
         id: row.id,
         title: row.title,
         year: row.year,
-        poster: row.poster,
+        poster: row.poster_url,
         file: {
             id: row.file_id,
             path: row.file_path
@@ -30,6 +30,7 @@ async function getShows() {
         SELECT
             s.id AS show_id,
             COALESCE(s.title, s.parsed_title) AS show_title,
+            s.poster_url,
 
             se.season_number,
             e.id AS episode_id,
@@ -74,6 +75,7 @@ async function getShows() {
     return Object.values(showsMap).map(show => ({
         id: show.id,
         title: show.title,
+        poster: show.poster_url,
         seasons: Object.values(show.seasons)
     }));
 }
