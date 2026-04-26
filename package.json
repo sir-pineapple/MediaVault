@@ -15,9 +15,12 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "server": "node server/index.js"
+    "server": "node server/index.js",
+    "client": "cd client && npm run dev -- --host",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "concurrent": "^0.3.2",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "pg": "^8.20.0"
