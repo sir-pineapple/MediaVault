@@ -10,6 +10,9 @@ const streamVideo = require('./stream');
 const app = express();
 app.use(express.json());
 
+const cors = require('cors');
+app.use(cors());
+
 app.get('/', (req, res) => {
     res.send('MediaVault API running');
 });
