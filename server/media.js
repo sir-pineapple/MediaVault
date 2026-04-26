@@ -36,7 +36,8 @@ async function getShows() {
             e.id AS episode_id,
             e.episode_number,
 
-            mf.id AS file_id
+            mf.id AS file_id,
+            mf.file_path
         
         FROM tv_shows s
         JOIN seasons se ON se.show_id = s.id
@@ -52,6 +53,7 @@ async function getShows() {
             showsMap[row.show_id] = {
                 id: row.show_id,
                 title: row.show_title,
+                poster: row.poster_url,
                 seasons: {}
             };
         }
@@ -68,14 +70,17 @@ async function getShows() {
         show.seasons[row.season_number].episodes.push({
             id: row.episode_id,
             episode: row.episode_number,
-            file_id: row.file_id
+            file: {
+                id: row.file_id,
+                path: row.file_path
+            }
         });
     }
 
     return Object.values(showsMap).map(show => ({
         id: show.id,
         title: show.title,
-        poster: show.poster_url,
+        poster: show.poster,
         seasons: Object.values(show.seasons)
     }));
 }
