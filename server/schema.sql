@@ -40,7 +40,7 @@ CREATE TABLE media_files (
     id SERIAL PRIMARY KEY,
     file_path TEXT UNIQUE NOT NULL,
     movie_id INT REFERENCES movies(id) ON DELETE CASCADE,
-    episode_id INT REFERENCES movies(id) ON DELETE CASCADE,
+    episode_id INT REFERENCES episodes(id) ON DELETE CASCADE,
     parsed_title TEXT,
     parsed_year INT,
     parsed_season INT,
