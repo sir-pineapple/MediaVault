@@ -9,6 +9,7 @@ export default function Home() {
 
     const fetchMedia = async () => {
         const res = await API.get("/media");
+        console.log("API Response:", res.data);
         setData(res.data);
     };
 
@@ -47,7 +48,7 @@ export default function Home() {
                 <h2 className="text-xl font-semibold mt-10 mb-4">Shows</h2>
                 <div className="flex flex-wrap gap-4">
                     {data.shows.map(s => (
-                        <MediaCard key={s.file.id} media={s} />
+                        <MediaCard key={s.id} media={s} />
                     ))}
                 </div>
             </div>

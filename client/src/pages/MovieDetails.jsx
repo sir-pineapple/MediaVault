@@ -4,7 +4,13 @@ export default function Details() {
     const { state } = useLocation();
     const navigate = useNavigate();
 
-    if (!state) return <p className="text-white">No data</p>;
+    if (!state || !state.file) {
+        return (
+            <div className="text-white p-10">
+                Invalid movie data
+            </div>
+        );
+    }
 
     return(
         <div
@@ -22,7 +28,7 @@ export default function Details() {
                 <p className="text-gray-300 mb-6">{state.year}</p>
 
                 <button
-                    onClick={() => navigate(`/player/${state.file.id}`)}
+                    onClick={() => navigate(`/watch/${state.file.id}`)}
                     className="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-xl text-lg"
                 >
                     ▶ Play

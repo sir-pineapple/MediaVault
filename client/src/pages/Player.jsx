@@ -16,7 +16,7 @@ export default function Player() {
         <div className="bg-black h-screen flex flex-col justify-center items-center text-white">
             <video
                 ref={videoRed}
-                src={`http://localhost:5000/stream/${id}`}
+                src={`${import.meta.env.VITE_API_URL}/stream/${id}`}
                 className="w-[80%] rounded-xl"
             />
 
