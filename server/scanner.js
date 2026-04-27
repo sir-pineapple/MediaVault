@@ -183,7 +183,16 @@ async function scanDirectory(dir) {
     }
 }
 
+async function cleanDB() {
+    await db.query(`
+        TRUNCATE TABLE media_files, episodes, seasons, tv_shows, movies
+        RESTART IDENTITY CASCADE
+    `);
+}
+
 async function runScan() {
+    console.log("Clearing database...");
+    await cleanDB();
     console.log("Scanning media folder...");
     await scanDirectory(MEDIA_DIR);
     console.log("Scan complete");
