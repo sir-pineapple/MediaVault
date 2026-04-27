@@ -34,7 +34,7 @@ export default function MediaCard({ media }) {
                         </p>
                     ) : (
                         <p className="text-sm text-gray-300">
-                            {media.seasons.length} seasonsw
+                            {media.seasons.length} Seasons
                         </p>
                     )}
                 </div>
