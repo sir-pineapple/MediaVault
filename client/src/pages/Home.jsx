@@ -9,7 +9,6 @@ export default function Home() {
 
     const fetchMedia = async () => {
         const res = await API.get("/media");
-        console.log("API Response:", res.data);
         setData(res.data);
     };
 
