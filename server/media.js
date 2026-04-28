@@ -7,6 +7,7 @@ async function getMovies() {
             COALESCE(m.title, m.parsed_title) AS title,
             COALESCE(m.year, m.parsed_year) AS year,
             m.poster_url,
+            m.imdb_id,
             mf.id AS file_id,
             mf.file_path
         FROM movies m
@@ -18,6 +19,7 @@ async function getMovies() {
         title: row.title,
         year: row.year,
         poster: row.poster_url,
+        imdbID: row.imdb_id,
         file: {
             id: row.file_id,
             path: row.file_path
@@ -31,6 +33,7 @@ async function getShows() {
             s.id AS show_id,
             COALESCE(s.title, s.parsed_title) AS show_title,
             s.poster_url,
+            s.imdb_id,
 
             se.season_number,
             e.id AS episode_id,
@@ -54,6 +57,7 @@ async function getShows() {
                 id: row.show_id,
                 title: row.show_title,
                 poster: row.poster_url,
+                imdbID: row.imdb_id,
                 seasons: {}
             };
         }
@@ -81,6 +85,7 @@ async function getShows() {
         id: show.id,
         title: show.title,
         poster: show.poster,
+        imdbID: show.imdbID,
         seasons: Object.values(show.seasons)
     }));
 }
