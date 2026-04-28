@@ -172,7 +172,7 @@ export default function Player() {
 
     return (
         <div className="bg-black h-screen flex justify-center items-center">
-            <div className="relative w-[80%]">
+            <div className="relative w-[80%] flex justify-center items-center">
                 <video
                     ref={videoRef}
                     onClick={togglePlay}
