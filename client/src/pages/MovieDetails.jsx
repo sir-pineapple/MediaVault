@@ -92,7 +92,7 @@ export default function Details() {
                 <div className="flex gap-4">
                     <button
                         onClick={() => navigate(`/watch/${state.file.id}`)}
-                        className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-200"
+                        className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-500 cursor-pointer"
                     >
                         ▶ Play
                     </button>
