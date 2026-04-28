@@ -73,7 +73,7 @@ export default function Details() {
                             href={`https://www.imdb.com/title/${state.imdbID}`}
                             target="_blank"
                             rel="noreferrer"
-                            className="text-yellow-400 hover-underline"
+                            className="text-yellow-400 hover:underline"
                         >
                             IMDb
                         </a>
