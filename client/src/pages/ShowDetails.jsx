@@ -46,7 +46,7 @@ export default function ShowDetails() {
             <div className="relative z-10 px-16 py-10 max-w-4xl">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mb-6 bg-black/60 px-4 py-2 rounded-lg"
+                    className="mb-6 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg cursor-pointer"
                 >
                     ← Back
                 </button>
@@ -62,6 +62,8 @@ export default function ShowDetails() {
 
                 <div className="flex items-center gap-4 text-gray-300 mb-6">
                     {details?.Year && <span>{details.Year}</span>}
+
+                    {details?.totalSeasons && (<span>• {details.totalSeasons} Seasons</span>)}
 
                     {state.imdbID && (
                         <a

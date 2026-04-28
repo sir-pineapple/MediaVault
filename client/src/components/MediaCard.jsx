@@ -24,7 +24,7 @@ export default function MediaCard({ media }) {
                 className="rounded-xl transition duration-300 group-hover:scale-105"
             />
 
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition rounded-xl flex items-end p3">
+            <div className="absolute inset-0 bg-black/60 opacity-0 transition rounded-xl flex items-end p3">
                 <div>
                     <p className="font-semibold">{media.title}</p>
 

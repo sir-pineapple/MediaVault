@@ -50,7 +50,7 @@ export default function Details() {
             <div className="relative z-10 px-16 max-w-2xl">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mb-6 bg-purple-600 px-4 py-2 rounded-lg cursor-pointer"
+                    className="mb-6 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg cursor-pointer"
                 >
                     ← Back
                 </button>
@@ -92,7 +92,7 @@ export default function Details() {
                 <div className="flex gap-4">
                     <button
                         onClick={() => navigate(`/watch/${state.file.id}`)}
-                        className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-500 cursor-pointer"
+                        className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold cursor-pointer"
                     >
                         ▶ Play
                     </button>
