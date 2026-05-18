@@ -13,9 +13,9 @@
   "license": "ISC",
   "author": "sir-pineapple",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "server": "node server/index.js",
+    "server": "node server/src/server.js",
     "client": "cd client && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },

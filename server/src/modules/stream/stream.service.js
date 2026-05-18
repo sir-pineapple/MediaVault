@@ -1,17 +1,22 @@
 const fs = require('fs');
-const path = require('path');
 
-function getContentType(filePath) {
-    const ext = path.extname(filePath).toLowerCase();
+const db = require('../../config/db');
+const getContentType = require('../../utils/contentType');
 
-    if (ext === '.mp4') return 'video/mp4';
-    if (ext === '.mkv') return 'video/x-matroska';
-    if (ext === '.avi') return 'video/x-msvideo';
+async function streamById(fileId, req, res) {
+    const result = await db.query(
+        `
+        SELECT file_path
+        FROM media_files
+        WHERE id = $1
+        `,
+        [fileId]
+    );
+    if (result.rowCount === 0) {
+        return res.status(404).send('File not found');
+    }
 
-    return 'application/octet-stream';
-}
-
-function streamVideo(filePath, req, res) {
+    const filePath = result.rows[0].file_path;
     const stat = fs.statSync(filePath);
     const fileSize = stat.size;
     const range = req.headers.range;
@@ -44,4 +49,4 @@ function streamVideo(filePath, req, res) {
     file.pipe(res);
 }
 
-module.exports = streamVideo;
+module.exports = { streamById };

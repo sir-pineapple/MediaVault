@@ -1,31 +1,9 @@
 const fs = require('fs').promises;
 const path = require('path');
-const db = require('./db');
+const db = require('../../config/db');
+const parseFileName = require('../../utils/filenameParser')
 
-const MEDIA_DIR = path.join(__dirname, '..', 'media');
-
-function parseFileName(filename) {
-    const name = path.basename(filename).replace(/\.[^/.]+$/, "");
-
-    const tvMatch = name.match(/(.+)[. ]S(\d{1,2})E(\d{1,2})/i);
-    if (tvMatch) {
-        return {
-            title:tvMatch[1].replace(/\./g, " ").trim(),
-            season: parseInt(tvMatch[2]),
-            episode: parseInt(tvMatch[3])
-        };
-    }
-
-    const movieMatch = name.match(/(.+)[. ]\(?(\d{4})\)?/);
-    if (movieMatch) {
-        return {
-            title: movieMatch[1].replace(/\./g, " ").trim(),
-            year: parseInt(movieMatch[2])
-        };
-    }
-
-    return { title: name };
-}
+const MEDIA_DIR = path.join(__dirname, "..", "..", "..", "..", "media_dir");
 
 async function processFile(filePath) {
     try {

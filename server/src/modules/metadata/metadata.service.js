@@ -1,20 +1,5 @@
-require('dotenv').config();
-
-const OMDB_KEY = process.env.OMDB_API_KEY;
-
-async function fetchMovieMetadata(title, year) {
-    const url = `https://www.omdbapi.com/?t=${encodeURIComponent(title)}&y=${year || ''}&apikey=${OMDB_KEY}`;
-
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if (data.Response === "False") {
-        return null;
-    }
-    return data;
-}
-
-const db = require('./db');
+const db = require('../../config/db');
+const { fetchMovieMetadata, fetchShowMetadata } = require('./omdb.client');
 
 async function enrichMovies() {
     const res = await db.query(
@@ -50,18 +35,6 @@ async function enrichMovies() {
     }
 }
 
-async function fetchShowMetadata(title) {
-    const url = `https://www.omdbapi.com/?t=${encodeURIComponent(title)}&type=series&apikey=${OMDB_KEY}`;
-
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if (data.Response === "False") {
-        return null;
-    }
-    return data;
-}
-
 async function enrichShows() {
     const res = await db.query(
         `SELECT * FROM tv_shows WHERE metadata_fetched = FALSE`
@@ -93,7 +66,6 @@ async function enrichShows() {
         console.log("Updated show:", data.Title);
     }
 }
-
 
 async function runMetadataEnrichment() {
     console.log("Fetching metadata...");
