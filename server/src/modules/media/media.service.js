@@ -7,6 +7,9 @@ async function getMovies() {
             COALESCE(m.title, m.parsed_title) AS title,
             COALESCE(m.year, m.parsed_year) AS year,
             m.poster_url,
+            m.genre,
+            m.runtime,
+            m.plot,
             m.imdb_id,
             mf.id AS file_id,
             mf.file_path
@@ -19,6 +22,9 @@ async function getMovies() {
         title: row.title,
         year: row.year,
         poster: row.poster_url,
+        genre: row.genre,
+        runtime: row.runtime,
+        plot: row.plot,
         imdbID: row.imdb_id,
         file: {
             id: row.file_id,
@@ -33,6 +39,10 @@ async function getShows() {
             s.id AS show_id,
             COALESCE(s.title, s.parsed_title) AS show_title,
             s.poster_url,
+            s.genre,
+            s.plot,
+            s.total_seasons,
+            s.year,
             s.imdb_id,
 
             se.season_number,
@@ -57,6 +67,10 @@ async function getShows() {
                 id: row.show_id,
                 title: row.show_title,
                 poster: row.poster_url,
+                genre: row.genre,
+                plot: row.plot,
+                totalSeasons: row.total_seasons,
+                year: row.year,
                 imdbID: row.imdb_id,
                 seasons: {}
             };
@@ -84,7 +98,11 @@ async function getShows() {
     return Object.values(showsMap).map(show => ({
         id: show.id,
         title: show.title,
-        poster: show.poster,
+        poster: show.poster, 
+        genre: show.genre,
+        plot: show.plot,
+        totalSeasons: show.totalSeasons,
+        year: show.year,
         imdbID: show.imdbID,
         seasons: Object.values(show.seasons)
     }));

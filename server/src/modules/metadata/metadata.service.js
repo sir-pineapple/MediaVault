@@ -19,13 +19,19 @@ async function enrichMovies() {
                     year = $2,
                     imdb_id = $3,
                     poster_url = $4,
+                    genre = $5,
+                    runtime = $6,
+                    plot = $7,
                     metadata_fetched = TRUE
-                WHERE id = $5
+                WHERE id = $8
             `, [
                 data.Title,
                 data.Year,
-                data.imdbId,
+                data.imdbID,
                 data.Poster,
+                data.Genre,
+                data.Runtime,
+                data.Plot,
                 movie.id
             ]
         );
@@ -51,12 +57,20 @@ async function enrichShows() {
                 SET title = $1,
                     imdb_id = $2,
                     poster_url = $3,
-                    metadata_found = TRUE
-                WHERE id = $4
+                    genre = $4,
+                    plot = $5,
+                    total_seasons = $6,
+                    year = $7,
+                    metadata_fetched = TRUE
+                WHERE id = $8
             `, [
                 data.Title,
-                data.imdbId,
+                data.imdbID,
                 data.Poster,
+                data.Genre,
+                data.Plot,
+                data.totalSeasons,
+                data.Year,
                 show.id
             ]
         );

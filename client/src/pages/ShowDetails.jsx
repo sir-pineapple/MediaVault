@@ -1,36 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 export default function ShowDetails() {
     const { state } = useLocation();
     const navigate = useNavigate();
-    const [details, setDetails] = useState(null);
 
     if (!state) {
         return <div className="text-white p-10">No show data</div>;
     }
-
-    useEffect(() => {
-        if (!state?.imdbID) return;
-
-        const fetchDetails = async () => {
-            try {
-                const res = await fetch(
-                    `https://www.omdbapi.com/?i=${state.imdbID}&apikey=${import.meta.env.VITE_OMDB_API_KEY}`
-                );
-                const data = await res.json();
-
-                if (data.Response !== "False") {
-                    setDetails(data);
-                }
-            }
-            catch (err) {
-                console.error(err);
-            }
-        };
-
-        fetchDetails();
-    }, [state]);
 
     return (
         <div
@@ -61,9 +37,9 @@ export default function ShowDetails() {
                 </h1>
 
                 <div className="flex items-center gap-4 text-gray-300 mb-6">
-                    {details?.Year && <span>{details.Year}</span>}
+                    <span>{state.year}</span>
 
-                    {details?.totalSeasons && (<span>• {details.totalSeasons} Seasons</span>)}
+                    <span>• {state.totalSeasons} Seasons</span>
 
                     {state.imdbID && (
                         <a
@@ -77,17 +53,13 @@ export default function ShowDetails() {
                     )}
                 </div>
 
-                {details?.Plot && (
-                    <p className="text-gray-300 mb-4 leading-relaxed">
-                        {details.Plot}
-                    </p>
-                )}
+                <p className="text-gray-300 mb-4 leading-relaxed">
+                    {state.plot}
+                </p>
 
-                {details?.Genre && (
-                    <p className="text-gray-400 mb-8">
-                        {details.Genre}
-                    </p>
-                )}
+                <p className="text-gray-400 mb-8">
+                    {state.genre}
+                </p>
 
                 <div className="space-y-8">
                     {state.seasons.map(season => (

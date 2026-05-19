@@ -1,10 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 export default function Details() {
     const { state } = useLocation();
     const navigate = useNavigate();
-    const [details, setDetails] = useState(null);
 
     if (!state || !state.file) {
         return (
@@ -13,28 +11,6 @@ export default function Details() {
             </div>
         );
     }
-
-    useEffect(() => {
-        if (!state?.imdbID) return;
-
-        const fetchDetails = async () => {
-            try {
-                const res = await fetch(
-                    `https://www.omdbapi.com/?i=${state.imdbID}&apikey=${import.meta.env.VITE_OMDB_API_KEY}`
-                );
-                const data = await res.json();
-
-                if (data.Response !== "False") {
-                    setDetails(data);
-                }
-            }
-            catch (err) {
-                console.error(err);
-            }
-        };
-
-        fetchDetails();
-    }, [state]);
 
     return(
         <div
@@ -64,9 +40,7 @@ export default function Details() {
                 <div className="flex items-center gap-4 text-gray-300 mb-6">
                     <span>{state.year}</span>
 
-                    {details?.Runtime && (
-                        <span>• {details.Runtime}</span>
-                    )}
+                    <span>• {state.runtime}</span>
 
                     {state.imdbID && (
                         <a
@@ -79,16 +53,12 @@ export default function Details() {
                         </a>
                     )}
                 </div>
-                {details?.Plot && (
-                    <p className="text-gray-300 mb-4 leading-relaxed">
-                        {details.Plot}
-                    </p>
-                )}
-                {details?.Genre && (
-                    <p className="text-gray-400 mb-6">
-                        {details.Genre}
-                    </p>
-                )}
+                <p className="text-gray-300 mb-4 leading-relaxed">
+                    {state.plot}
+                </p>
+                <p className="text-gray-400 mb-6">
+                    {state.genre}
+                </p>
                 <div className="flex gap-4">
                     <button
                         onClick={() => navigate(`/watch/${state.file.id}`)}
