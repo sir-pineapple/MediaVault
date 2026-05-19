@@ -6,7 +6,8 @@ const parseFileName = require('../../utils/filenameParser')
 const MEDIA_DIR = path.join(__dirname, "..", "..", "..", "..", "media_dir");
 const VIDEO_EXTENSIONS = new Set(['.mp4', '.mkv', '.avi', '.mov', '.webm', '.m4v']);
 
-async function processFile(filePath) {
+async function processFile(filePath, scannedFiles) {
+    scannedFiles.add(filePath);
     try {
         const parsed = parseFileName(filePath);
 
@@ -147,36 +148,64 @@ async function handleTV(media) {
     );
 }
 
-async function scanDirectory(dir) {
+async function scanDirectory(dir, scannedFiles) {
     const entries = await fs.readdir(dir, { withFileTypes: true });
 
     for (const entry of entries) {
         const fullPath = path.join(dir, entry.name);
 
         if (entry.isDirectory()) {
-            await scanDirectory(fullPath);
+            await scanDirectory(fullPath, scannedFiles);
         }
         else {
             const ext = path.extname(entry.name).toLowerCase();
             if (VIDEO_EXTENSIONS.has(ext)) {
-                await processFile(fullPath);
+                await processFile(fullPath, scannedFiles);
             }
         }
     }
 }
 
-async function cleanDB() {
+async function cleanupOrphans() {
     await db.query(`
-        TRUNCATE TABLE media_files, episodes, seasons, tv_shows, movies
-        RESTART IDENTITY CASCADE
+        DELETE FROM episodes WHERE id NOT IN (
+            SELECT episode_id FROM media_files WHERE episode_id IS NOT NULL
+        )
+    `);
+    await db.query(`
+        DELETE FROM seasons WHERE id NOT IN (
+            SELECT season_id FROM episodes
+        )
+    `);
+    await db.query(`
+        DELETE FROM tv_shows WHERE id NOT IN (
+            SELECT show_id FROM seasons
+        )
+    `);
+    await db.query(`
+        DELETE FROM movies WHERE id NOT IN (
+            SELECT movie_id FROM media_files WHERE movie_id IS NOT NULL
+        )
     `);
 }
 
+async function removeDeletedFiles(scannedFiles) {
+    const res = await db.query(`SELECT id, file_path FROM media_files`);
+
+    for (const file of res.rows) {
+        if (!scannedFiles.has(file.file_path)) {
+            console.log('Removing:', file.file_path);
+            await db.query(`DELETE FROM media_files WHERE id=$1`, [file.id]);
+        }
+    }
+    await cleanupOrphans();
+}
+
 async function runScan() {
-    console.log("Clearing database...");
-    await cleanDB();
     console.log("Scanning media folder...");
-    await scanDirectory(MEDIA_DIR);
+    const scannedFiles = new Set();
+    await scanDirectory(MEDIA_DIR, scannedFiles);
+    await removeDeletedFiles(scannedFiles);
     console.log("Scan complete");
 }
 
