@@ -4,6 +4,7 @@ const db = require('../../config/db');
 const parseFileName = require('../../utils/filenameParser')
 
 const MEDIA_DIR = path.join(__dirname, "..", "..", "..", "..", "media_dir");
+const VIDEO_EXTENSIONS = new Set(['.mp4', '.mkv', '.avi', '.mov', '.webm', '.m4v']);
 
 async function processFile(filePath) {
     try {
@@ -156,7 +157,10 @@ async function scanDirectory(dir) {
             await scanDirectory(fullPath);
         }
         else {
-            await processFile(fullPath);
+            const ext = path.extname(entry.name).toLowerCase();
+            if (VIDEO_EXTENSIONS.has(ext)) {
+                await processFile(fullPath);
+            }
         }
     }
 }
