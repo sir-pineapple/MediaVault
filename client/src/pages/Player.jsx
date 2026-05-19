@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import API from "../api/api";
 
 export default function Player() {
     const { id } = useParams();
@@ -181,7 +182,7 @@ export default function Player() {
                     onLoadedMetadata={handleLoadedMetadata}
                     className="w-full rounded-xl cursor-pointer"
                 >
-                    <source src={`${import.meta.env.VITE_API_URL}/stream/${id}`} />
+                    <source src={`/api/stream/${id}`} />
                 </video>
 
                 <div className={`absolute bottom-0 left-0 w-full transition-opacity duration-300 ${
