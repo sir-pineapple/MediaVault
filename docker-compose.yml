@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: mediavault-db
+
+    environment:
+      POSTGRES_DB: mediavault
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U postgres -d mediavault"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    
+    ports:
+      - "5432:5432"
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+    restart: unless-stopped
+  
+  backend:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    
+    container_name: mediavault-api
+
+    env_file:
+      - .env
+    
+    ports:
+      - "5000:5000"
+    
+    depends_on:
+      postgres:
+        condition: service_healthy
+    
+    volumes:
+      - .:/app
+      - /media/sf_Movies:/app/media_dir
+    
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
