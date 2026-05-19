@@ -15,9 +15,7 @@
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "server": "node server/src/server.js",
-    "client": "cd client && npm run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "server": "node server/src/server.js"
   },
   "dependencies": {
     "concurrent": "^0.3.2",

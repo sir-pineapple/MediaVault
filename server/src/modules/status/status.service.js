@@ -16,7 +16,7 @@ async function getStatus() {
     }
 
     try {
-        mediaDirectory = fs.existsSync(process.env.MEDIA_DIR);
+        mediaDirectory = fs.existsSync(path.join(__dirname, "..", "..", "..", "..", "media_dir"));
     }
     catch (err) {
         mediaDirectory = false;
