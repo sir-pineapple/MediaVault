@@ -2,6 +2,8 @@ services:
   postgres:
     image: postgres:17-alpine
 
+    container_name: mediavault-db
+
     environment:
       POSTGRES_DB: mediavault
       POSTGRES_USER: postgres
